@@ -14,11 +14,7 @@ ANALYSIS_MAIN=""
 PROGRAM_DIR=""
 PROGRAM_MAIN=""
 
-INPUT_FILE=""
-OUTPUT_FILE=""
-DOCKER_OPTIONS=""
 DOCKER_IMAGE_NAME=""
-MX_OPTIONS=""
 
 # Parse arguments.
 while [[ $# -gt 0 ]]
