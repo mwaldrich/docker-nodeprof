@@ -4,10 +4,10 @@ usage(){
     >&2 echo "Usage: ./docker-run-file.sh <analysis> <program to instrument>"
 }
 
-# if [[ $@ -ne 3 ]]; then
-#     usage
-#     exit 1
-# fi
+if [[ $# -ne 3 ]]; then
+    usage
+    exit 1
+fi
 
 ./docker-analyze.sh --analysisDir $(dirname $1) \
                     --analysisMain $(basename $1) \
