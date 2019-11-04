@@ -37,7 +37,7 @@ do
             shift
             shift
             ;;
-        --tag)
+        --imageName)
             DOCKER_IMAGE_NAME="$2"
             shift
             shift

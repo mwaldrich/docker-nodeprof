@@ -7,6 +7,7 @@ usage() {
     --analysisMain <path to analysis main>
     --programDir <path to program home>
     --programMain <path to program main>
+    [--imageName <name of NodeProf Docker image>]"
 }
 
 ANALYSIS_DIR=""
@@ -14,7 +15,7 @@ ANALYSIS_MAIN=""
 PROGRAM_DIR=""
 PROGRAM_MAIN=""
 
-DOCKER_IMAGE_NAME=""
+DOCKER_IMAGE_NAME=nodeprof
 
 # Parse arguments.
 while [[ $# -gt 0 ]]
@@ -46,6 +47,11 @@ case $key in
     shift
     shift
     ;;
+    --imageName)
+    DOCKER_IMAGE_NAME="$2"
+    shift
+    shift
+    ;;
     # Unknown argument
     *)
     usage
@@ -69,8 +75,6 @@ canonicalize() {
 }
 ANALYSIS_DIR=$(canonicalize "$ANALYSIS_DIR")
 PROGRAM_DIR=$(canonicalize "$PROGRAM_DIR")
-
-DOCKER_IMAGE_NAME=nodeprof
 
 # Ensure the Docker container exists before we attempt to use it.
 if ! (docker images | grep -q "$DOCKER_IMAGE_NAME")
