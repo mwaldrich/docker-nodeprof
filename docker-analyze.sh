@@ -3,10 +3,10 @@
 usage() {
     >&2 echo "Usage: ./docker-analyze.sh
     [-h|--help]
-    [--analysisDir <path to analysis home>]
-    [--analysisMain <path to analysis main>]
-    [--programDir <path to program home>]
-    [--programMain <path to program main>]"
+    --analysisDir <path to analysis home>
+    --analysisMain <path to analysis main>
+    --programDir <path to program home>
+    --programMain <path to program main>
 }
 
 ANALYSIS_DIR=""
