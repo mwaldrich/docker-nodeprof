@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 usage(){
-    >&2 echo "Usage: ./docker-run-file.sh <analysis> <program to instrument>"
+    >&2 echo "Usage: ./docker-analyze-file.sh <analysis> <program to instrument>"
 }
 
-if [[ $# -ne 3 ]]; then
+if [[ $# -ne 2 ]]; then
     usage
     exit 1
 fi
