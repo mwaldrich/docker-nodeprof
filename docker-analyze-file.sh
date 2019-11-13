@@ -9,7 +9,12 @@ if [[ $# -ne 2 ]]; then
     exit 1
 fi
 
-./docker-analyze.sh --analysisDir $(dirname $1) \
+# Get directory of THIS script. This will be used to execute
+# the `docker-analyze.sh` script, which should be located in
+# the same directory as this script.
+SCRIPT_DIRECTORY="$(dirname ${BASH_SOURCE[0]})"
+
+"${SCRIPT_DIRECTORY}"/docker-analyze.sh --analysisDir $(dirname $1) \
                     --analysisMain $(basename $1) \
                     --programDir $(dirname $2) \
                     --programMain $(basename $2)
