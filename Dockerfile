@@ -24,5 +24,8 @@ COPY ${nodeprof_repo} /root/nodeprof
 RUN (cd /root/nodeprof && \
      (mx update && mx sforceimports && mx build))
 
+# Display color output in terminal
+ENV TERM xterm-256color
+
 # This container can now be used like `mx`.
 # ENTRYPOINT ["/root/mx/mx"]

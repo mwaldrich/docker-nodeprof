@@ -86,6 +86,7 @@ fi
 docker run --rm \
        -v $PROGRAM_DIR:/root/program \
        -v $ANALYSIS_DIR:/root/analysis \
+       -it \
        ${DOCKER_IMAGE_NAME}:latest \
        bash -c \
        "(cd /root/program; \
