@@ -7,13 +7,15 @@ usage() {
     --analysisMain <path to analysis main>
     --programDir <path to program home>
     --programMain <path to program main>
-    [--imageName <name of NodeProf Docker image>]"
+    [--imageName <name of NodeProf Docker image>]
+    [-- [arguments to program]]"
 }
 
 ANALYSIS_DIR=""
 ANALYSIS_MAIN=""
 PROGRAM_DIR=""
 PROGRAM_MAIN=""
+PROGRAM_ARGS=""
 
 DOCKER_IMAGE_NAME=nodeprof
 
@@ -51,6 +53,11 @@ case $key in
     DOCKER_IMAGE_NAME="$2"
     shift
     shift
+    ;;
+    --)
+    shift # to get rid of the `--` argument
+    PROGRAM_ARGS=${@:1}
+    break
     ;;
     # Unknown argument
     *)
@@ -92,4 +99,4 @@ docker run --rm \
        "(cd /root/program; \
        /root/mx/mx -p /root/nodeprof/ jalangi \
          --analysis /root/analysis/$ANALYSIS_MAIN \
-         /root/program/$PROGRAM_MAIN)"
+         /root/program/$PROGRAM_MAIN ${PROGRAM_ARGS})"
