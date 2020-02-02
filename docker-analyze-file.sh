@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-usage(){
+usage() {
     >&2 echo "Usage: ./docker-analyze-file.sh <analysis> <program to instrument> [additional options for docker-analyze.sh]"
 }
 
