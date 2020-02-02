@@ -7,6 +7,7 @@ usage() {
     --analysisMain <path to analysis main>
     --programDir <path to program home>
     --programMain <path to program main>
+    [--mxArg \"<argument to mx>\"]* <-- any number of times
     [--imageName <name of NodeProf Docker image>]
     [-- [arguments to program]]"
 }
@@ -16,6 +17,7 @@ ANALYSIS_MAIN=""
 PROGRAM_DIR=""
 PROGRAM_MAIN=""
 PROGRAM_ARGS=""
+MX_ARGS=""
 
 DOCKER_IMAGE_NAME=nodeprof
 
@@ -51,6 +53,11 @@ case $key in
     ;;
     --imageName)
     DOCKER_IMAGE_NAME="$2"
+    shift
+    shift
+    ;;
+    --mxArg)
+    MX_ARGS+="$2 "
     shift
     shift
     ;;
@@ -93,10 +100,10 @@ fi
 docker run --rm \
        -v $PROGRAM_DIR:/root/program \
        -v $ANALYSIS_DIR:/root/analysis \
-       -it \
        ${DOCKER_IMAGE_NAME}:latest \
        bash -c \
        "(cd /root/program; \
        /root/mx/mx -p /root/nodeprof/ jalangi \
+         ${MX_ARGS} \
          --analysis /root/analysis/$ANALYSIS_MAIN \
          /root/program/$PROGRAM_MAIN ${PROGRAM_ARGS})"
