@@ -85,7 +85,7 @@ fi
 # INPUT_FILE and OUTPUT_FILE are absolute. We can do this by canonicalizing
 # both paths.
 canonicalize() {
-    readlink -f "$@"
+    realpath "$@"
 }
 ANALYSIS_DIR=$(canonicalize "$ANALYSIS_DIR")
 PROGRAM_DIR=$(canonicalize "$PROGRAM_DIR")
