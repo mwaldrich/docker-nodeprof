@@ -7,6 +7,7 @@ usage() {
     --analysisMain <path to analysis main>
     --programDir <path to program home>
     --programMain <path to program main>
+    [--absolutePath (indicates that programMain is an absolute path to a system-wide script like npm)]
     [--imageName <name of NodeProf Docker image>]
     [-- [arguments to program]]"
 }
@@ -16,6 +17,7 @@ ANALYSIS_MAIN=""
 PROGRAM_DIR=""
 PROGRAM_MAIN=""
 PROGRAM_ARGS=""
+ABSOLUTE_PATH=false
 
 DOCKER_IMAGE_NAME=nodeprof
 
@@ -54,6 +56,10 @@ case $key in
     shift
     shift
     ;;
+    --absolutePath)
+    ABSOLUTE_PATH=true
+    shift
+    ;;
     --)
     shift # to get rid of the `--` argument
     PROGRAM_ARGS=${@:1}
@@ -90,6 +96,13 @@ then
     exit 1
 fi
 
+# compute path to program inside docker container
+if [[ $ABSOLUTE_PATH ]]; then
+    DOCKER_PROGRAM_PATH="${PROGRAM_MAIN}"
+else
+    DOCKER_PROGRAM_PATH="/root/program/${PROGRAM_MAIN}"
+fi
+
 docker run --rm \
        -v $PROGRAM_DIR:/root/program \
        -v $ANALYSIS_DIR:/root/analysis \
@@ -99,4 +112,4 @@ docker run --rm \
        "(cd /root/program; \
        /root/mx/mx -p /root/nodeprof/ jalangi \
          --analysis /root/analysis/$ANALYSIS_MAIN \
-         /root/program/$PROGRAM_MAIN ${PROGRAM_ARGS})"
+         ${DOCKER_PROGRAM_PATH} ${PROGRAM_ARGS})"
