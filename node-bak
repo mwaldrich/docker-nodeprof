@@ -1,0 +1,48 @@
+
+#!/usr/bin/env sh
+
+# TODO: ensure variables exist first:
+# - DOCKER_DIR
+# - ANALYSIS_DIR
+# - ANALYSIS_MAIN
+# - PROJECT_DIR
+
+# there are two cases when node is being invoked:
+# 1. node is being invoked on a file inside the project directory
+# 2. node is being invoked on some system-wide script (like /usr/bin/npm)
+
+# what will the paths look like?
+# let's go through some examples
+
+# 1. node is being invoked in a file inside the project directory
+# DOCKER_DIR = /home/mwaldrich/docker-nodeprof
+# ANALYSIS_DIR = /home/mwaldrich/analysis
+# ANALYSIS_MAIN = 20-01-22-analysis.js
+# PROJECT_DIR = /home/mwaldrich/project
+# pwd = /home/mwaldrich/project/programs
+# $1 = main.js
+# actual program path = /home/mwaldrich/project/programs/main.js
+
+# interesting conditions:
+# os.path.isabs($1) = false  -->  project file
+# we want a call like:
+# $DOCKER_DIR/docker-analyze.sh <...> --programDir $PROJECT_DIR --programMain (($(pwd) + $1) relative to $PROJECT_DIR)
+
+is_relative_path() {
+    res=$(python -c 'import sys; import os; print(os.path.isabs(sys.argv[1]))' $1)
+
+    if [[ res -eq "True" ]]; then
+        true
+    else
+        false
+    fi
+}
+
+# are we executing a relative path = file in the current project?
+executing_rel=$(is_relative_path $1)
+
+if [[ $(is_relative_path $1 ]]; then
+
+       
+
+$DOCKER_DIR/docker-analyze.sh --analysisDir $ANALYSIS_DIR --analysisMain $ANALYSIS_MAIN
