@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+&>2 echo "Electron is not supported during instrumentation!"
+
+exit 1

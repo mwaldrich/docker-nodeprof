@@ -86,6 +86,11 @@ fi
 canonicalize() {
     readlink -f "$@"
 }
+# String, String -> String
+# remove the first string from the beginning of the second string
+# strip_dir_from_front_of_path() {
+#     
+# }
 ANALYSIS_DIR=$(canonicalize "$ANALYSIS_DIR")
 PROGRAM_DIR=$(canonicalize "$PROGRAM_DIR")
 
@@ -97,10 +102,10 @@ then
 fi
 
 # compute path to program inside docker container
-if [[ $ABSOLUTE_PATH ]]; then
-    DOCKER_PROGRAM_PATH="${PROGRAM_MAIN}"
+if [[ $ABSOLUTE_PATH  ]]; then
+    DOCKER_PROGRAM_COMMAND="${PROGRAM_MAIN}"
 else
-    DOCKER_PROGRAM_PATH="/root/program/${PROGRAM_MAIN}"
+    DOCKER_PROGRAM_COMMAND="node /root/program/${PROGRAM_MAIN}"
 fi
 
 docker run --rm \
@@ -110,6 +115,6 @@ docker run --rm \
        ${DOCKER_IMAGE_NAME}:latest \
        bash -c \
        "(cd /root/program; \
-       /root/mx/mx -p /root/nodeprof/ jalangi \
-         --analysis /root/analysis/$ANALYSIS_MAIN \
-         ${DOCKER_PROGRAM_PATH} ${PROGRAM_ARGS})"
+        NODEPROF_HOME=/root/nodeprof \
+        NODEPROF_ANALYSIS_PATH=/root/analysis/$ANALYSIS_MAIN \
+        /root/bin/instrument ${DOCKER_PROGRAM_COMMAND} ${PROGRAM_ARGS})"

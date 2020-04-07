@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# INVARIANT: this script expects the following environment variables to be
+#            set:
+#            - $NODEPROF_ANALYSIS_PATH --> path of the analysis
+#            - $NODEPROF_JALANGI_PATH  --> path to jalangi.js file (see repo)
+#            - $GRAALJS_EXECUTABLE     --> path to GraalJS's `node` executable
+
+# Usage: is_defined <environment variable name without dollar sign>
+function is_defined() {
+	if [ -z "${!1}" ]; then
+		echo "Error! The $1 environment variable needs to be set in order to use this script!"
+		echo 'See the `check-env-vars` script for details.'
+		return 1
+	fi
+}
+
+vars=(NODEPROF_ANALYSIS_PATH NODEPROF_JALANGI_PATH GRAALJS_EXECUTABLE)
+
+# Check to make sure all required variales are defined
+code=0
+for v in ${vars[@]}; do
+	is_defined $v
+	if [ $? -eq 1 ]; then
+		code=1
+	fi
+done
+
+exit $code

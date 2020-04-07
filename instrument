@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Get directory of THIS script. This will be used to execute
+# the `check-env-vars` script, which should be located in
+# the same directory as this script.
+SCRIPT_DIRECTORY="$(dirname ${BASH_SOURCE[0]})"
+
+# ensure environment variables are set
+$SCRIPT_DIRECTORY/check-env-vars
+
+canonicalize() {
+	# realpath "$@"
+	echo "$(cd $(dirname $1); pwd -P)/$(basename $1)"
+}
+
+# We want to add the custom `node` alias in this directory to the PATH.
+# Therefore, we add the current directory `.` to the shell PATH.
+PATH=$SCRIPT_DIRECTORY:$PATH
+
+# Execute the given command.
+"$@"

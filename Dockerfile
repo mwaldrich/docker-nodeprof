@@ -5,7 +5,7 @@ FROM ubuntu:18.04
 RUN \
   apt-get update && \
   apt-get -y upgrade && \
-  apt-get install -y build-essential git wget python2.7 nodejs npm
+  apt-get install -y build-essential git wget python2.7 python3 nodejs npm
 
 # Install mx and add it to the path
 RUN (cd /root; git clone https://github.com/graalvm/mx.git)
@@ -23,6 +23,12 @@ ARG nodeprof_repo=docker/nodeprof-clones/public/nodeprof.js
 COPY ${nodeprof_repo} /root/nodeprof
 RUN (cd /root/nodeprof && \
      (mx update && mx sforceimports && mx build))
+
+# Ensure all JS code is instrumented by intercepting all calls to `node`
+RUN mkdir /root/bin
+COPY node /root/bin
+COPY instrument /root/bin
+COPY check-env-vars /root/bin
 
 # Display color output in terminal
 ENV TERM xterm-256color
