@@ -4,9 +4,8 @@
 
 # INVARIANT: this script expects the following environment variables to be
 #            set:
-#            - $NODEPROF_ANALYSIS_PATH --> path of the analysis
-#            - $NODEPROF_JALANGI_PATH  --> path to jalangi.js file (see repo)
-#            - $GRAALJS_EXECUTABLE     --> path to GraalJS's `node` executable
+#            - $NODEPROF_HOME --> path to NodeProf installation
+#            - $NODEPROF_ANALYSIS_PATH --> path to NodeProf analysis to be used
 
 # Get directory of THIS script. This will be used to execute
 # the `check-env-vars` script, which should be located in
@@ -18,9 +17,5 @@ $SCRIPT_DIRECTORY/check-env-vars
 
 echo 'Intercepted invocation of `node`! Instrumenting call...'
 
-# - $NODEPROF_HOME
-# - $NODEPROF_ANALYSIS_PATH
 
 mx -v -p $NODEPROF_HOME jalangi --analysis $NODEPROF_ANALYSIS_PATH $@
-
-# $GRAALJS_EXECUTABLE --jvm --vm.ea --experimental-options --engine.InstrumentExceptionsAreThrown=true --nodeprof --nodeprof.Analysis=NodeProfJalangi --nodeprof.Scope=module --nodeprof.ExcludeSource=${NODEPROF_ANALYSIS_PATH} ${NODEPROF_JALANGIPATH} --analysis $NODEPROF_ANALYSIS_PATH $@

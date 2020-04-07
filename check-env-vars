@@ -15,7 +15,7 @@ function is_defined() {
 	fi
 }
 
-vars=(NODEPROF_ANALYSIS_PATH NODEPROF_JALANGI_PATH GRAALJS_EXECUTABLE)
+vars=(NODEPROF_HOME NODEPROF_ANALYSIS_PATH)
 
 # Check to make sure all required variales are defined
 code=0
