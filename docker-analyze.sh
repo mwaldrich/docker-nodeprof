@@ -102,7 +102,7 @@ then
 fi
 
 # compute path to program inside docker container
-if [[ $ABSOLUTE_PATH  ]]; then
+if [[ $ABSOLUTE_PATH = true ]]; then
     DOCKER_PROGRAM_COMMAND="${PROGRAM_MAIN}"
 else
     DOCKER_PROGRAM_COMMAND="node /root/program/${PROGRAM_MAIN}"
