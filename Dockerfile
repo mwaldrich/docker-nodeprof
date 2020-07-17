@@ -22,7 +22,9 @@ ARG nodeprof_repo=docker/nodeprof-clones/public/nodeprof.js
 # Install NodeProf
 COPY ${nodeprof_repo} /root/nodeprof
 RUN (cd /root/nodeprof && \
-     (mx update && mx sforceimports && mx build))
+     (mx update && mx sforceimports && mx build && mx test-all))
+# we run tests here because some dependencies don't download until
+# analyses are actually run.
 
 # Display color output in terminal
 ENV TERM xterm-256color
