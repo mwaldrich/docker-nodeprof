@@ -74,5 +74,5 @@ fi
 # Build the image.
 docker build -t $DOCKER_IMAGE_NAME \
        --build-arg nodeprof_repo=$REPO_PATH \
-       --ulimit nofile=262144:262144
+       --ulimit nofile=262144:262144 \
        .
