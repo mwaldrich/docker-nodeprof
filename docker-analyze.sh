@@ -100,6 +100,7 @@ fi
 docker run --rm \
        -v $PROGRAM_DIR:/root/program \
        -v $ANALYSIS_DIR:/root/analysis \
+       --ulimit nofile=262144:262144 \
        ${DOCKER_IMAGE_NAME}:latest \
        bash -c \
        "(cd /root/program; \
