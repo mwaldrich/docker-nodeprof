@@ -10,13 +10,14 @@ usage() {
     >&2 echo ""
     >&2 echo "If --repo is not specified, it will default to \`vanilla/nodeprof.js\`, and it will be fetched automatically from ${VANILLA_GIT_REPO_URL}."
     >&2 echo ""
-    >&2 echo "If --imageName is not specified, it will default to \`nodeprof\`."
+    >&2 echo "If --imageName is not specified, it will default to \`mwaldrich/docker-nodeprof\`."
 }
 
 # Default values of variables
-REPO_PATH="nodeprof-clones/vanilla/nodeprof.js"
+DOCKER_NODEPROF_PATH="$(dirname "${BASH_SOURCE[0]}")"
+REPO_PATH="${DOCKER_NODEPROF_PATH}/nodeprof-clones/vanilla/nodeprof.js"
 CUSTOM_REPO_PATH=0
-DOCKER_IMAGE_NAME=nodeprof
+DOCKER_IMAGE_NAME="mwaldrich/docker-nodeprof"
 
 # Ensure `nodeprof-clones/` exists.
 mkdir -p nodeprof-clones
@@ -75,4 +76,4 @@ fi
 docker build -t $DOCKER_IMAGE_NAME \
        --build-arg nodeprof_repo=$REPO_PATH \
        --ulimit nofile=262144:262144 \
-       "$(dirname "${BASH_SOURCE[0]}")"
+       "${DOCKER_NODEPROF_PATH}"

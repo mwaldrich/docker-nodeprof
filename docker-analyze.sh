@@ -19,7 +19,7 @@ PROGRAM_MAIN=""
 PROGRAM_ARGS=""
 MX_ARGS=""
 
-DOCKER_IMAGE_NAME=nodeprof
+DOCKER_IMAGE_NAME="mwaldrich/docker-nodeprof"
 
 # Parse arguments.
 while [[ $# -gt 0 ]]
