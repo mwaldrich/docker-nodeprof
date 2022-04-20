@@ -1,6 +1,6 @@
 # docker-nodeprof
 
-This repo contains a Dockerfile for NodeProf. Shell scripts have been provided to automate the process of (a) building NodeProf, and (b) analyzing programs.
+This repo contains a Dockerfile for [NodeProf](https://github.com/Haiyang-Sun/nodeprof.js). Shell scripts have been provided to automate the process of (a) building NodeProf, and (b) analyzing programs.
 
 ## Getting started
 
