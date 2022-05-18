@@ -6,7 +6,7 @@ VANILLA_GIT_REPO_URL='https://github.com/Haiyang-Sun/nodeprof.js.git'
 
 # Function to print usage.
 usage() {
-    >&2 echo "Usage: ./docker-build.sh [-h|--help] [--repo <repo path>] [--imageName <Docker image name>]"
+    >&2 echo "Usage: ./docker-build.sh [-h|--help] [--repo <repo path>] [--commit <hash>] [--imageName <Docker image name>]"
     >&2 echo ""
     >&2 echo "If --repo is not specified, it will default to \`vanilla/nodeprof.js\`, and it will be fetched automatically from ${VANILLA_GIT_REPO_URL}."
     >&2 echo ""
@@ -18,6 +18,7 @@ DOCKER_NODEPROF_PATH="$(dirname "${BASH_SOURCE[0]}")"
 REPO_PATH="${DOCKER_NODEPROF_PATH}/nodeprof-clones/vanilla/nodeprof.js"
 CUSTOM_REPO_PATH=0
 DOCKER_IMAGE_NAME="mwaldrich/docker-nodeprof"
+COMMIT_REV="4cc03cf02e149eaf50f4470fd7d6383c2af72cba"
 
 # Ensure `nodeprof-clones/` exists.
 mkdir -p nodeprof-clones
@@ -40,6 +41,11 @@ do
             ;;
         --imageName)
             DOCKER_IMAGE_NAME="$2"
+            shift
+            shift
+            ;;
+        --commit)
+            COMMIT_REV="$2"
             shift
             shift
             ;;
@@ -66,9 +72,9 @@ if [[ $CUSTOM_REPO_PATH = 0 ]]; then
     # Clone/pull from the repository as necessary.
     if [ ! -d ${REPO_PATH}/.git ]
     then
-        (cd $LOCAL_LOCATION; git clone $GIT_REPO)
+        (cd $LOCAL_LOCATION; git clone $GIT_REPO; git checkout $COMMIT_REV)
     else
-        (cd $LOCAL_LOCATION/$REPO_NAME; git pull)
+        (cd $LOCAL_LOCATION/$REPO_NAME; git checkout $COMMIT_REV)
     fi
 fi
 
