@@ -72,9 +72,9 @@ if [[ $CUSTOM_REPO_PATH = 0 ]]; then
     # Clone/pull from the repository as necessary.
     if [ ! -d ${REPO_PATH}/.git ]
     then
-        (cd $LOCAL_LOCATION; git clone $GIT_REPO; git checkout $COMMIT_REV)
+        (cd $LOCAL_LOCATION && git clone $GIT_REPO && cd $REPO_NAME && git checkout $COMMIT_REV)
     else
-        (cd $LOCAL_LOCATION/$REPO_NAME; git checkout $COMMIT_REV)
+        (cd $LOCAL_LOCATION/$REPO_NAME && git checkout $COMMIT_REV)
     fi
 fi
 
